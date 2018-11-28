@@ -37,7 +37,7 @@ def main():
     main, side = deck(main), deck(side[:-1])
 
     m_dlist = proc(main)
-    s_dlist = proc(side[:-1])
+    s_dlist = proc(side)
 
     print("\n------------------------------MAIN DECK----------------------------\n")
     total = 0
