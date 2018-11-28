@@ -20,30 +20,40 @@ def htmlgen(cardname, shop = 's'):
 def suruga(soup):
     first_item = soup.find('div', class_='item_box first_item')
 
-    s_card = ''
+    s_card = 'NOT FOUND'
     try:
         l = first_item.find_all('div')[0]
         item = l.text.split('\n')
         s_card = ' '.join(i for i in item[-5:-1])
     except:
-        s_card = 'NOT FOUND'
+        pass
 
     return s_card    
         
+def hareruya_ng(string):
+    nglist = ['トークン', 'エンブレム']
+    add = 0
+    for ng in nglist:
+        if string.count(ng) > 0:
+            add += 1
+    
+    if add > 0:
+        return False
+    else:
+        return True
+
+
 
 def hareruya(soup):
-    h_card = ''
+    h_card = 'NOT FOUND'
     for item in soup.find_all('a', class_='spTopPopup popup_product'):
         l = item.text.split('\n')
-        if l[-3] != 'SOLD OUT':
+        if l[-3] != 'SOLD OUT' and hareruya_ng(item.text):
             h_card = item.text.replace('\r','').replace('\t','').split('\n')
             break
 
-    #h_card = ' '.join(s for s in h_card.split('\n') if s != '')
-    if h_card == '':
-        return 'NOT FOUND'
-    else:
-        return h_card[3] + h_card[7]   
+    h_card = h_card[3] + h_card[7]
+    return h_card
 
 def search(cardname):
     l = []
