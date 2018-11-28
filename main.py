@@ -30,13 +30,13 @@ s_dlist = []
 with open(deckname, 'r') as rf:
     main, side = ''.join(r for r in rf).split('\n\nSideboard\n')
 
-    main, side = deck(main), deck(side[:-1])
+main, side = deck(main), deck(side[:-1])
 
-    with Pool(processes=maxproc) as p:
-       m_dlist = p.map(search, main)
+with Pool(processes=maxproc) as p:
+   m_dlist = p.map(search, main)
 
-    with Pool(processes=maxproc) as p:
-       s_dlist = p.map(search, side)
+with Pool(processes=maxproc) as p:
+   s_dlist = p.map(search, side)
 
 print("\n------------------------------MAIN DECK----------------------------\n")
 total = 0
