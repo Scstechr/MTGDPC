@@ -1,5 +1,5 @@
 main:
-	python main.py decklist2.txt
+	python main.py decklist.txt
 
 sub:
 	python sub.py

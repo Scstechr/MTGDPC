@@ -1,0 +1,18 @@
+8 Swamp
+8 Forest
+4 Overgrown Tomb
+4 Golgari Guildgate (b)
+4 Glowspore Shaman
+3 Midnight Reaper
+3 Plaguecrafter
+4 Golgari Findbroker
+4 Doom Whisperer
+2 Underrealm Lich
+2 Dead Weight
+2 Assassin's Trophy
+4 Discovery
+3 Find
+2 Price of Fame
+3 Vraska, Golgari Queen
+
+Sideboard
