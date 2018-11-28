@@ -30,6 +30,13 @@ def proc(d):
 
     return lst
 
+def printout(d, mode = "main"):
+    if mode == "main":
+        print("\n------------------------------MAIN DECK----------------------------\n")
+    else:
+        print("\n------------------------------SIDEBOARD----------------------------\n")
+    pass
+
 def main():
     with open(deckname, 'r') as rf:
         main, side = ''.join(r for r in rf).split('\n\nSideboard\n')
@@ -39,7 +46,7 @@ def main():
     m_dlist = proc(main)
     s_dlist = proc(side)
 
-    print("\n------------------------------MAIN DECK----------------------------\n")
+    printout(main)
     total = 0
     for card, d in zip(main, m_dlist):
         price = int(d['price'].replace(',',''))
@@ -50,7 +57,7 @@ def main():
 
     print("\nmain ) price:", total)
 
-    print("\n------------------------------SIDEBOARD----------------------------\n")
+    printout(side, mode = "side")
     s_total = 0
     for card, d in zip(side, s_dlist):
         price = int(d['price'].replace(',',''))
