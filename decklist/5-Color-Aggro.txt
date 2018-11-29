@@ -1,0 +1,32 @@
+5-Color-Aggro [2]
+土地 (24)
+4	古代の聖塔/Ancient Ziggurat
+1	秘儀の聖域/Arcane Sanctum
+4	風変わりな果樹園/Exotic Orchard
+1	森/Forest
+1	島/Island
+4	ジャングルの祭殿/Jungle Shrine
+1	山/Mountain
+1	平地/Plains
+3	野蛮な地/Savage Lands
+3	海辺の城塞/Seaside Citadel
+1	沼/Swamp
+クリーチャー (29)
+4	血編み髪のエルフ/Bloodbraid Elf
+3	若き群れのドラゴン/Broodmate Dragon
+2	戦争のアスラ、ジェナーラ/Jenara, Asura of War
+4	貴族の教主/Noble Hierarch
+4	朽ちゆくヒル/Putrid Leech
+4	ロウクスの戦修道士/Rhox War Monk
+4	セドラクシスの死霊/Sedraxis Specter
+4	長毛のソクター/Woolly Thoctar
+呪文 (7)
+3	ナヤの魔除け/Naya Charm
+4	流刑への道/Path to Exile
+サイドボード (15)
+2	呪詛術士/Anathemancer
+2	戦誉の天使/Battlegrace Angel
+4	天界の粛清/Celestial Purge
+3	妨げる光/Hindering Light
+2	クァーサルの群れ魔道士/Qasali Pridemage
+2	領土を滅ぼすもの/Realm Razer

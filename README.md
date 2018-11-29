@@ -14,7 +14,8 @@ Simply, `pip install -r requirements.txt` to install above mentioned modules.
 ### How to use
 
 #### 1. Prepare decklist
-`.txt` file of decklist must fit the following format:
+`.txt` file of decklist must fit with one of the following formats.
+##### Format (A) Basic Format
 ```
 <# of cards> <card name>
 ...
@@ -24,7 +25,23 @@ Sideboard
 ...
 ```
 Note that card name must be in English.  
-`decklist/` directory contains some sample `.txt` files.
+`decklist/` directory contains some sample `.txt` files.  
+Also, other format will be automatically converted to this format.
+##### Format (B) M:TG Wiki Style
+If you copy and paste from [M:TG Wiki](http://mtgwiki.com/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8), some will look like:
+
+```
+<deck name>[?]
+土地 (#)
+<# of cards>	<card name [JPN]/[EN]>
+クリーチャー (#)
+<# of cards>	<card name [JPN]/[EN]>
+呪文 (#)
+<# of cards>	<card name [JPN]/[EN]>
+サイドボード (#)
+<# of cards>	<card name [JPN]/[EN]>
+```
+In this case, `mtgdpc` will automatically convert it and replace it with Basic Format.
 
 #### 2. Execute `mtgdpc.py` with argument of prepared `.txt` file
 ```
@@ -48,72 +65,159 @@ total price (main + side): (A) + (B)
 
 ### Sample Decklist & Output
 
-#### `decklist/gorgari_midrange.txt`
+#### `decklist/MoMa.txt`
 ```
-7 Swamp
-5 Forest
-4 Overgrown Tomb
-4 Woodland Cemetery
-4 Llanowar Elves
-4 Pelt Collector
-4 Stitcher's Supplier
-4 Glowspore Shaman
-4 Merfolk Branchwalker
-2 Graveyard Marshal
-2 Kraul Harpooner
-4 Charnel Troll
-4 Midnight Reaper
-4 Plaguecrafter
-4 Gruesome Menagerie
+4 Tundra
+4 Volcanic Island
+3 City of Brass
+4 Ancient Tomb
+4 Tolarian Academy
+4 Lotus Petal
+4 Mox Diamond
+4 Mana Vault
+3 Voltaic Key
+2 Scroll Rack
+3 Mind Over Matter
+4 Windfall
+4 Time Spiral
+3 Abeyance
+3 Intuition
+3 Power Sink
+4 Stroke of Genius
 
 Sideboard
-3 Kitesail Freebooter
-3 Plague Mare
-2 Deathgorge Scavenger
-1 Reclamation Sage
-3 Necrotic Wound
-2 Shapers' Sanctuary
-1 Mark of the Vampire
+4 Gorilla Shaman
+4 Chill
+2 Red Elemental Blast
+1 Arcane Denial
+4 Wasteland
 ```
 
-#### Output
+##### Output
 ```
+$ python mtgdpc.py decklist/MoMa.txt
+
 ------------------------------ MAIN DECK ------------------------------
 
-8 x 8 = 64           森/Forest
-8 x 7 = 56           沼/Swamp
-666 x 4 = 2664       草むした墓/Overgrown Tomb
-550 x 4 = 2200       森林の墓地/Woodland Cemetery
-9 x 4 = 36           ラノワールのエルフ/Llanowar Elves
-144 x 4 = 576        マーフォークの枝渡り/Merfolk Branchwalker
-50 x 3 = 150         探求者の従者/Seekers' Squire
-9 x 2 = 18           野茂み歩き/Wildgrowth Walker
-980 x 4 = 3920       翡翠光のレインジャー/Jadelight Ranger
-9 x 1 = 9            管区の案内人/District Guide
-45 x 3 = 135         貪欲なチュパカブラ/Ravenous Chupacabra
-9 x 2 = 18           ゴルガリの拾売人/Golgari Findbroker
-1580 x 4 = 6320      破滅を囁くもの/Doom Whisperer
-14 x 1 = 14          千の目、アイゾーニ/Izoni, Thousand-Eyed
-1280 x 2 = 2560      暗殺者の戦利品/Assassin's Trophy
-119 x 2 = 238        採取/Find （さいしゅ）  最終/Finality
-880 x 2 = 1760       ゴルガリの女王、ヴラスカ/Vraska, Golgari Queen
-1180 x 3 = 3540      秘宝探究者、ヴラスカ/Vraska, Relic Seeker
+23800 x 4 = 95200    Tundra
+37999 x 4 = 151996   Volcanic Island
+240 x 3 = 720        真鍮の都/City of Brass
+2580 x 4 = 10320     古えの墳墓/Ancient Tomb
+2800 x 4 = 11200     トレイリアのアカデミー/Tolarian Academy
+310 x 4 = 1240       水蓮の花びら/Lotus Petal
+13900 x 4 = 55600    モックス・ダイアモンド/Mox Diamond
+900 x 4 = 3600       魔力の櫃/Mana Vault
+70 x 3 = 210         通電式キー/Voltaic Key
+1950 x 2 = 3900      巻物棚/Scroll Rack
+1010 x 3 = 3030      精神力/Mind Over Matter
+10 x 4 = 40          意外な授かり物/Windfall
+40 x 4 = 160         時のらせん/Time Spiral
+280 x 3 = 840        中断/Abeyance
+4280 x 3 = 12840     直観/Intuition
+15 x 3 = 45          魔力消沈/Power Sink
+36 x 4 = 144         天才のひらめき/Stroke of Genius
 
-main ) price: 24278
+main ) price: 351085
 
 ------------------------------ SIDEBOARD ------------------------------
 
-9 x 1 = 9            野茂み歩き/Wildgrowth Walker
-14 x 1 = 14          千の目、アイゾーニ/Izoni, Thousand-Eyed
-8 x 3 = 24           強迫/Duress
-10 x 3 = 30          渇望の時/Moment of Craving
-180 x 1 = 180        アルゲールの断血/Arguel's Blood Fast
-1280 x 2 = 2560      ヴラスカの侮辱/Vraska's Contempt
-30 x 2 = 60          最古再誕/The Eldest Reborn
-119 x 1 = 119        採取/Find （さいしゅ）  最終/Finality
-2490 x 1 = 2490      ビビアン・リード/Vivien Reid
+40 x 4 = 160         ゴリラのシャーマン/Gorilla Shaman
+30 x 4 = 120         寒け/Chill
+25 x 2 = 50          赤霊破/Red Elemental Blast
+25 x 1 = 25          秘儀の否定/Arcane Denial
+2200 x 4 = 8800      不毛の大地/Wasteland
 
-side ) price: 5486
+side ) price: 9155
 
-total price (main + side): 29764
+total price (main + side): 360240
+
 ```
+#### `decklist/`[5-Color-Aggro](http://mtgwiki.com/wiki/%EF%BC%95%E8%89%B2%E3%83%87%E3%83%83%E3%82%AD)
+```
+5-Color-Aggro [2]
+土地 (24)
+4	古代の聖塔/Ancient Ziggurat
+1	秘儀の聖域/Arcane Sanctum
+4	風変わりな果樹園/Exotic Orchard
+1	森/Forest
+1	島/Island
+4	ジャングルの祭殿/Jungle Shrine
+1	山/Mountain
+1	平地/Plains
+3	野蛮な地/Savage Lands
+3	海辺の城塞/Seaside Citadel
+1	沼/Swamp
+クリーチャー (29)
+4	血編み髪のエルフ/Bloodbraid Elf
+3	若き群れのドラゴン/Broodmate Dragon
+2	戦争のアスラ、ジェナーラ/Jenara, Asura of War
+4	貴族の教主/Noble Hierarch
+4	朽ちゆくヒル/Putrid Leech
+4	ロウクスの戦修道士/Rhox War Monk
+4	セドラクシスの死霊/Sedraxis Specter
+4	長毛のソクター/Woolly Thoctar
+呪文 (7)
+3	ナヤの魔除け/Naya Charm
+4	流刑への道/Path to Exile
+サイドボード (15)
+2	呪詛術士/Anathemancer
+2	戦誉の天使/Battlegrace Angel
+4	天界の粛清/Celestial Purge
+3	妨げる光/Hindering Light
+2	クァーサルの群れ魔道士/Qasali Pridemage
+2	領土を滅ぼすもの/Realm Razer
+```
+##### Output
+```
+$ python mtgdpc.py decklist/5-Color-Aggro.txt
+
+------------------------------ MAIN DECK ------------------------------
+
+790 x 4 = 3160       古代の聖塔/Ancient Ziggurat
+9 x 1 = 9            秘儀の聖域/Arcane Sanctum
+10 x 4 = 40          風変わりな果樹園/Exotic Orchard
+8 x 1 = 8            森/Forest
+9 x 1 = 9            島/Island
+9 x 4 = 36           ジャングルの祭殿/Jungle Shrine
+5 x 1 = 5            山/Mountain
+9 x 1 = 9            平地/Plains
+9 x 3 = 27           野蛮な地/Savage Lands
+9 x 3 = 27           海辺の城塞/Seaside Citadel
+8 x 1 = 8            沼/Swamp
+360 x 4 = 1440       血編み髪のエルフ/Bloodbraid Elf
+20 x 3 = 60          若き群れのドラゴン/Broodmate Dragon
+140 x 2 = 280        戦争のアスラ、ジェナーラ/Jenara, Asura of War
+5790 x 4 = 23160     貴族の教主/Noble Hierarch
+20 x 4 = 80          朽ちゆくヒル/Putrid Leech
+9 x 4 = 36           ロウクスの戦修道士/Rhox War Monk
+10 x 4 = 40          セドラクシスの死霊/Sedraxis Specter
+9 x 4 = 36           長毛のソクター/Woolly Thoctar
+9 x 3 = 27           ナヤの魔除け/Naya Charm
+690 x 4 = 2760       流刑への道/Path to Exile
+
+main ) price: 31257
+
+------------------------------ SIDEBOARD ------------------------------
+
+10 x 2 = 20          呪詛術士/Anathemancer
+30 x 2 = 60          戦誉の天使/Battlegrace Angel
+10 x 4 = 40          天界の粛清/Celestial Purge
+10 x 3 = 30          妨げる光/Hindering Light
+80 x 2 = 160         クァーサルの群れ魔道士/Qasali Pridemage
+20 x 2 = 40          領土を滅ぼすもの/Realm Razer
+
+side ) price: 350
+
+total price (main + side): 31607
+```
+
+### Future Enhancements
+
+- Introduce:
+	- `Pandas` to manage it with `DataFrames`.
+	- `Click` for better CUI experience.
+- Handle more format of decklists.
+- Add:
+	- Card info screen with capability of search individual prices.
+	- Mana info such as ratio and pie.
+
