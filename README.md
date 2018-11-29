@@ -1,7 +1,7 @@
 ## MTGDPC
 
 Magic the Gathering Deck Price Checker (for JPN Players).  
-Price check is done by crawling [Wisdom Guild](www.wisdom-guild.net) with BeautifulSoup.
+Price check is done by crawling [Wisdom Guild](http://www.wisdom-guild.net) with BeautifulSoup.
 
 ### Requirements
 
