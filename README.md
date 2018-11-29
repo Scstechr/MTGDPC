@@ -1,9 +1,11 @@
-## MTGDPC
-
+# MTGDPC
 Magic the Gathering Deck Price Checker (for JPN Players).  
-Price check is done by [Wisdom Guild](http://www.wisdom-guild.net).
 
-### Requirements
+### About
+
+MTGDPC (`mtgdpc`) enables users to search the cheapest price of given card name via [Wisdom Guild](http://www.wisdom-guild.net).
+
+#### Requirements
 
 - Python 3.6 (or above)
 - Beautiful Soup
@@ -14,8 +16,10 @@ Simply, `pip install -r requirements.txt` to install above mentioned modules.
 ### How to use
 
 #### 1. Prepare decklist
-`.txt` file of decklist must fit with one of the following formats.
+- `.txt` file of decklist must fit either Format (A) or (B).
+- `decklist/` directory contains some sample `.txt` files.  
 ##### Format (A) Basic Format
+Note that card name must be in English.  
 ```
 <# of cards> <card name>
 ...
@@ -24,8 +28,6 @@ Sideboard
 <# of cards> <card name>
 ...
 ```
-Note that card name must be in English.  
-`decklist/` directory contains some sample `.txt` files.  
 Also, other format will be automatically converted to this format.
 ##### Format (B) M:TG Wiki Style
 If you copy and paste from [M:TG Wiki](http://mtgwiki.com/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8), some will look like:
