@@ -40,6 +40,7 @@ def printout(d, mode = "main"):
     string = 'main' if mode == 'main' else 'side'
     print(f"\n{string} ) price:", total)
     return total
+
 def replacetags(string):
     string = string.replace('カード名', '')
     string = string.replace('マナコスト', '')
@@ -78,7 +79,10 @@ def search(card):
             if info[0].text.count('カード名') > 0:
                 name = replacetags(info[0].text.strip())[:-1]
                 st   = replacetags(info[7].text.strip()).split(", ")
-                d['name']     = name[1:name.rfind('（') - 1]
+                if name.count('（') > 0:
+                    d['name'] = name[1:name.rfind('（') - 1]
+                else:
+                    d['name'] = card.name
                 d['cost']     = replacetags(info[1].text.strip())
                 d['type']     = replacetags(info[2].text.strip())[1:]
                 d['text']     = replacetags(info[3].text.strip())

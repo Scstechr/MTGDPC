@@ -1,12 +1,18 @@
 import sys
 
 from search import *
+from convert import convert
 
 deckname = sys.argv[1]
 
 def main():
     with open(deckname, 'r') as rf:
-        main, side = ''.join(r for r in rf).split('\n\nSideboard\n')
+        try:
+            main, side = ''.join(r for r in rf).split('\n\nSideboard\n')
+        except:
+            convert(deckname)
+            with open(deckname, 'r') as rf2:
+                main, side = ''.join(r for r in rf2).split('\n\nSideboard\n')
 
     main, side = deck(main), deck(side[:-1])
 
