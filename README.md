@@ -1,11 +1,11 @@
 # MTGDPC
 Magic the Gathering Deck Price Checker (for JPN Players).  
 
-### About
+## About
 
 MTGDPC (`mtgdpc`) enables users to search the cheapest price of given card name via [Wisdom Guild](http://www.wisdom-guild.net).
 
-#### Requirements
+### Requirements
 
 - Python 3.6 (or above)
 - Beautiful Soup
@@ -13,12 +13,12 @@ MTGDPC (`mtgdpc`) enables users to search the cheapest price of given card name 
 
 Simply, `pip install -r requirements.txt` to install above mentioned modules.
 
-### How to use
+## How to use
 
-#### 1. Prepare decklist
+### 1. Prepare decklist
 - `.txt` file of decklist must fit either Format (A) or (B).
 - `decklist/` directory contains some sample `.txt` files.  
-##### Format (A) Basic Format
+#### Format (A) Basic Format
 Note that card name must be in English.  
 ```
 <# of cards> <card name>
@@ -29,7 +29,7 @@ Sideboard
 ...
 ```
 Also, other format will be automatically converted to this format.
-##### Format (B) M:TG Wiki Style
+#### Format (B) M:TG Wiki Style
 If you copy and paste from [M:TG Wiki](http://mtgwiki.com/wiki/%E3%83%A1%E3%82%A4%E3%83%B3%E3%83%9A%E3%83%BC%E3%82%B8), some will look like:
 
 ```
@@ -45,7 +45,7 @@ If you copy and paste from [M:TG Wiki](http://mtgwiki.com/wiki/%E3%83%A1%E3%82%A
 ```
 In this case, `mtgdpc` will automatically convert it and replace it with Basic Format.
 
-#### 2. Execute `mtgdpc.py` with argument of prepared `.txt` file
+### 2. Execute `mtgdpc.py` with argument of prepared `.txt` file
 ```
 $ python mtgdpc.py <.txt file>
 ------------------------------ MAIN DECK ------------------------------
@@ -65,9 +65,9 @@ side ) price: < (B) total price of sideboard >
 total price (main + side): (A) + (B)
 ```
 
-### Sample Decklist & Output
+## Sample Decklist & Output
 
-#### `decklist/MoMa.txt`
+### `decklist/MoMa.txt`
 ```
 4 Tundra
 4 Volcanic Island
@@ -95,7 +95,7 @@ Sideboard
 4 Wasteland
 ```
 
-##### Output
+#### Output
 ```
 $ python mtgdpc.py decklist/MoMa.txt
 
@@ -134,7 +134,7 @@ side ) price: 9155
 total price (main + side): 360240
 
 ```
-#### `decklist/`[5-Color-Aggro](http://mtgwiki.com/wiki/%EF%BC%95%E8%89%B2%E3%83%87%E3%83%83%E3%82%AD)
+### `decklist/`[5-Color-Aggro](http://mtgwiki.com/wiki/%EF%BC%95%E8%89%B2%E3%83%87%E3%83%83%E3%82%AD)
 ```
 5-Color-Aggro [2]
 土地 (24)
@@ -169,7 +169,7 @@ total price (main + side): 360240
 2	クァーサルの群れ魔道士/Qasali Pridemage
 2	領土を滅ぼすもの/Realm Razer
 ```
-##### Output
+#### Output
 ```
 $ python mtgdpc.py decklist/5-Color-Aggro.txt
 
@@ -213,7 +213,7 @@ side ) price: 350
 total price (main + side): 31607
 ```
 
-### Future Enhancements
+## Future Enhancements
 
 - Introduce:
 	- `Pandas` to manage it with `DataFrames`.
