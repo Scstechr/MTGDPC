@@ -1,0 +1,36 @@
+2 Swamp
+1 Forest
+1 Plains
+4 Overgrown Tomb
+4 Woodland Cemetery
+4 Isolated Chapel
+4 Temple Garden
+4 Sunpetal Grove
+1 Arch of Orazca
+4 Knight of Autumn
+3 Assassin's Trophy
+3 Seal Away
+2 Cast Down
+2 Treasure Map
+1 Azor's Gateway
+4 Gift of Paradise
+2 Mastermind's Acquisition
+2 Ritual of Soot
+2 Vraska's Contempt
+4 The Eldest Reborn
+2 Cleansing Nova
+3 Karn, Scion of Urza
+1 Vraska, Relic Seeker
+
+Sideboard
+1 Golgari Findbroker
+1 Trostani Discordant
+2 Carnage Tyrant
+4 Duress
+1 Silent Gravestone
+1 Amulet of Safekeeping
+1 Arguel's Blood Fast
+1 Assassin's Trophy
+1 Sorcerous Spyglass
+1 Vraska's Contempt
+1 Banefire

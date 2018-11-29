@@ -1,5 +1,3 @@
-import pickle
-import os
 import sys
 
 from search import search
