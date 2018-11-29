@@ -1,7 +1,7 @@
 ## MTGDPC
 
 Magic the Gathering Deck Price Checker (for JPN Players).  
-Price check is done by crawling [Wisdom Guild](http://www.wisdom-guild.net) with BeautifulSoup.
+Price check is done by [Wisdom Guild](http://www.wisdom-guild.net).
 
 ### Requirements
 
@@ -9,7 +9,7 @@ Price check is done by crawling [Wisdom Guild](http://www.wisdom-guild.net) with
 - Beautiful Soup
 - lxml
 
-Simply, `pip install -r requirements.txt` to install above modules.
+Simply, `pip install -r requirements.txt` to install above mentioned modules.
 
 ### How to use
 
@@ -24,7 +24,7 @@ Sideboard
 ...
 ```
 Note that card name must be in English.  
-`decklist` directory contains some sample `.txt` files.
+`decklist/` directory contains some sample `.txt` files.
 
 #### 2. Execute `mtgdpc.py` with argument of prepared `.txt` file
 ```
