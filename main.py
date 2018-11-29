@@ -31,11 +31,19 @@ def proc(d):
     return lst
 
 def printout(d, mode = "main"):
-    if mode == "main":
-        print("\n------------------------------MAIN DECK----------------------------\n")
-    else:
-        print("\n------------------------------SIDEBOARD----------------------------\n")
-    pass
+    lst = proc(d)
+    l = ''.join('-' for _ in range(30))
+    print(f"\n{l} MAIN DECK {l}\n") if mode == "main" else print(f"\n{l} SIDEBOARD {l}\n")
+    total = 0
+    for card, d in zip(d, lst):
+        price = int(d['price'].replace(',',''))
+        num = int(card.num)
+        total += price * num
+        print(f"{price} x {num} = {price*num}".ljust(20), end=' ')
+        print(d['name'])
+    string = 'main' if mode == 'main' else 'side'
+    print(f"\n{string} ) price:", total)
+    return total
 
 def main():
     with open(deckname, 'r') as rf:
@@ -43,30 +51,10 @@ def main():
 
     main, side = deck(main), deck(side[:-1])
 
-    m_dlist = proc(main)
-    s_dlist = proc(side)
+    total = printout(main)
 
-    printout(main)
-    total = 0
-    for card, d in zip(main, m_dlist):
-        price = int(d['price'].replace(',',''))
-        num = int(card.num)
-        total += price * num
-        print(f"{price} x {num} = {price*num}".ljust(20), end=' ')
-        print(d['name'])
+    s_total = printout(side, mode = "side")
 
-    print("\nmain ) price:", total)
-
-    printout(side, mode = "side")
-    s_total = 0
-    for card, d in zip(side, s_dlist):
-        price = int(d['price'].replace(',',''))
-        num = int(card.num)
-        s_total += price * num
-        print(f"{price} x {num} = {price*num}".ljust(20), end=' ')
-        print(d['name'])
-
-    print("\nside ) price:", s_total)
     print("\ntotal price (main + side):", total + s_total)
 
 if __name__ == "__main__":
