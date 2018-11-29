@@ -7,18 +7,21 @@ deckname = sys.argv[1]
 
 def main():
     with open(deckname, 'r') as rf:
-        try:
-            main, side = ''.join(r for r in rf).split('\n\nSideboard\n')
-        except:
+        lst = ''.join(r for r in rf).split('\n\nSideboard\n')
+        if len(lst) != 2:
             convert(deckname)
             with open(deckname, 'r') as rf2:
-                main, side = ''.join(r for r in rf2).split('\n\nSideboard\n')
+                lst = ''.join(r for r in rf2).split('\n\nSideboard\n')
 
-    main, side = deck(main), deck(side[:-1])
-
+    main = deck(lst[0])
     total = printout(main)
 
-    s_total = printout(side, mode = "side")
+    if len(lst) == 2 and lst[1] != '':
+        side = deck(lst[1][:-1])
+        s_total = printout(side, mode = "side")
+    else:
+        print("side ) price: 0")
+        s_total = 0
 
     print("\ntotal price (main + side):", total + s_total)
 
