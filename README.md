@@ -220,6 +220,6 @@ total price (main + side): 31607
 	- `Click` for better CUI experience.
 - Handle more format of decklists.
 - Add:
-	- Card info screen with capability of search individual prices.
+	- Card info screen with capability of searching individual prices.
 	- Mana info such as ratio and pie.
 
