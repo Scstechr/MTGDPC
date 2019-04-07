@@ -1,0 +1,28 @@
+2 Plains
+3 Hallowed Fountain
+1 Sacred Foundry
+4 Flooded Strand
+1 Arid Mesa
+3 Marsh Flats
+1 Seachrome Coast
+4 Puresteel Paladin
+4 Sram, Senior Edificer
+4 Mox Opal
+4 Retract
+2 Noxious Revival
+2 Serum Visions
+1 Grapeshot
+4 Repeal
+4 Paradise Mantle
+4 Spidersilk Net
+4 Accorder's Shield
+4 Cathar's Shield
+4 Sigil of Distinction
+
+Sideboard
+4 Burrenton Forge-Tender
+4 Monastery Mentor
+3 Silence
+2 Fragmentize
+1 Hurkyl's Recall
+1 Ghirapur Aether Grid

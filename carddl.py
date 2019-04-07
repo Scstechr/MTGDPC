@@ -17,8 +17,8 @@ MODERN = {c for c in SORTSET if int(SORTSET[c]) > 20030526}
 BASIC = ['Plains', 'Swamp', 'Island', 'Mountain', 'Forest']
 
 def downloader(card, output, url, language, replace=False):
-    if len(output) > 50:
-        out = output[:40] + '...' 
+    if len(output) > 60:
+        out = output[:50] + '...' 
     else:
         out = output
     print(f"{out} \033[70G| {DICT[card.set]} ({card.set})")
@@ -184,7 +184,8 @@ def main(edition, name, path, single, high, language, frmt, unleash):
         names = [card.name for card in sets]
         dlist = set(card for card in names if names.count(card) > 1)
 
-    print(f"RESULTS :{len(cards)}")
+    if not single:
+        print(f"RESULTS :{len(cards)}")
     for card in cards:
         if single:
             search(card, path, high, language)

@@ -1,0 +1,23 @@
+6 Island
+6 Forest
+4 Breeding Pool
+4 Hinterland Harbor
+4 Memorial to Genius
+1 Arch of Orazca
+3 Hydroid Krasis
+4 Opt
+4 Growth Spiral
+4 Root Snare
+3 Search for Azcanta
+2 Blink of an Eye
+3 Sinister Sabotage
+4 Chemister's Insight
+4 Wilderness Reclamation
+4 Nexus of Fate
+
+Sideboard
+3 Druid of the Cowl
+3 Kraul Harpooner
+3 Biogenic Ooze
+3 Negate
+3 Crushing Canopy
