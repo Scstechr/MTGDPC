@@ -53,6 +53,5 @@ def main(deckname, save):
         for card in dllist:
             sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s', shell=True)
 
-
 if __name__ == '__main__':
     main()
