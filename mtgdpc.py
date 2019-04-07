@@ -13,7 +13,8 @@ from search import *
 @click.command()
 @click.argument("deckname")
 @click.option("-s", "--save", is_flag="False")
-def main(deckname, save):
+@click.option("-h", "--high", is_flag="False")
+def main(deckname, save, high):
     with open(deckname, 'r') as rf:
         lst = ''.join(r for r in rf).split('\n\nSideboard\n')
         if len(lst) != 2:
@@ -50,7 +51,8 @@ def main(deckname, save):
     if save:
         print()
         head, ext = os.path.splitext(deckname)
-        [sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s', shell=True) for card in dllist]
+        arg = 'h' if high else ''
+        [sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s{arg}', shell=True) for card in dllist]
 
 if __name__ == '__main__':
     main()
