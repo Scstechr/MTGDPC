@@ -13,6 +13,8 @@ SETS = [s.code for s in sets if s.type in ['expansion', 'core']]
 DICT = {s.code:s.name for s in sets}
 dct = {s.code:s.release_date.replace('-','') for s in sets if s.code in SETS}
 SORTSET = {c:r for c, r in sorted(dct.items(), key=lambda x: x[1])}
+MODERN = {c for c in SORTSET if int(SORTSET[c]) > 20030526}
+BASIC = ['Plains', 'Swamp', 'Island', 'Mountain', 'Forest']
 
 def downloader(card, output, url, language, replace=False):
     print(f"{output} \033[70G| {DICT[card.set]} ({card.set})")
@@ -124,21 +126,12 @@ def main(edition, name, path, single, high, language, frmt):
 
     cards = [card for card in cards if card.image_url]
     cards = [card for card in cards if card.set in SETS]
+    if frmt == 'modern':
+        cards = [card for card in cards if card.set in MODERN]
 
     # chronological sort editions
     sets = {card.set:SORTSET[card.set] for card in cards}
     sortset = {c:r for c, r in sorted(sets.items(), key=lambda x: x[1])}
-
-    if frmt == "modern":
-        flag = False
-        keys = []
-        for s in sortset:
-            if s == '8ED':
-                flag = True
-            if not flag:
-                keys.append(s)
-        for key in keys:
-            del sortset[key]
 
     cards = [c for s in sortset for c in cards if c.set == s]
     if not len(cards):

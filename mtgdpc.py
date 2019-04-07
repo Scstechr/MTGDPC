@@ -15,7 +15,8 @@ from src.search import *
 @click.option("-s", "--save", is_flag="False")
 @click.option("-h", "--high", is_flag="False")
 @click.option("-f", "--frmt", default="standard")
-def main(deckname, save, high, frmt):
+@click.option("-l", "--lang", default="en")
+def main(deckname, save, high, frmt, lang):
     with open(deckname, 'r') as rf:
         lst = ''.join(r for r in rf).split('\n\nSideboard\n')
         if len(lst) != 2:
@@ -52,9 +53,10 @@ def main(deckname, save, high, frmt):
     if save:
         print()
         head, ext = os.path.splitext(deckname)
-        arg = 'h' if high else ''
+        arg = '-h' if high else ''
         arg += f' -f{frmt}' if frmt != 'standard'  else ''
-        [sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s{arg}', shell=True) for card in dllist]
+        arg += f' -l {lang}' if lang != 'en' else ''
+        [sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s {arg}', shell=True) for card in dllist]
 
 if __name__ == '__main__':
     main()
