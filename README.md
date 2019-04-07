@@ -1,6 +1,4 @@
-This repository consists of `mtgdpc` and `carddl`.
-
-# MTGDPC (`mtgdpc`)
+# MTGDPC
 Magic the Gathering Deck Price Checker (for JPN Players).  
 
 Consists of `mtgdpc.py` and `carddl.py`, which `carddl.py` could be utilized independently.  
