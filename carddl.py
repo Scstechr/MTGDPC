@@ -100,15 +100,23 @@ def search(card, path, high, language, flag=False):
     else: 
         hr_save(card, output, language) if high else save(card, output)
 
+exp_e = "Give specific name of a set."
+exp_n = "Give specific name of a card."
+exp_p = "Set path of where to save card if needed."
+exp_s = "Only search for single card."
+exp_h = "High-res option for images."
+exp_l = "Select en/ja (en is default)."
+exp_f = "Select format such as 'modern'."
+exp_u = "Unbound to all cards ever released."
 @click.command()
-@click.option("-e", "--edition")
-@click.option("-n", "--name")
-@click.option("-p", "--path", default="cardchunk")
-@click.option("-s", "--single", is_flag ="False")
-@click.option("-h", "--high", is_flag="False")
-@click.option("-l", "--language", default='en')
-@click.option("-f", "--frmt", default='standard')
-@click.option("-u", "--unleash", is_flag="False")
+@click.option("-e", "--edition", help=exp_e)
+@click.option("-n", "--name", help=exp_n)
+@click.option("-p", "--path", default="cardchunk", help=exp_p)
+@click.option("-s", "--single", is_flag ="False", help=exp_s)
+@click.option("-h", "--high", is_flag="False", help=exp_h)
+@click.option("-l", "--language", default='en', help=exp_l)
+@click.option("-f", "--frmt", default='standard', help=exp_f)
+@click.option("-u", "--unleash", is_flag="False", help=exp_u)
 def main(edition, name, path, single, high, language, frmt, unleash):
     if name:
         if name.count("+"):
@@ -121,6 +129,9 @@ def main(edition, name, path, single, high, language, frmt, unleash):
     else:
         cards = Card.where(name=name).all()
 
+    if not name and not edition:
+        print("Give at least name (w/ -n) or edition (w/ -e).\nBoth of them is also welcome.")
+        exit()
     cards = [card for card in cards if card.image_url]
     if unleash:
         sets = Set.all()

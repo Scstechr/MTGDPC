@@ -10,12 +10,16 @@ import tqdm
 from src.convert import convert
 from src.search import *
 
+exp_s = "Save images of cards from decklist."
+exp_h = "Use high-res option of carddl.py.  "
+exp_f = "Select format e.g, modern, vintage."
+exp_l = "Select language from en/ja .       "
 @click.command()
 @click.argument("deckname")
-@click.option("-s", "--save", is_flag="False")
-@click.option("-h", "--high", is_flag="False")
-@click.option("-f", "--frmt", default="standard")
-@click.option("-l", "--lang", default="en")
+@click.option("-s", "--save", is_flag="False", help=exp_s)
+@click.option("-h", "--high", is_flag="False", help=exp_h)
+@click.option("-f", "--frmt", default="standard", help=exp_f)
+@click.option("-l", "--lang", default="en", help=exp_l)
 def main(deckname, save, high, frmt, lang):
     with open(deckname, 'r') as rf:
         lst = ''.join(r for r in rf).split('\n\nSideboard\n')
