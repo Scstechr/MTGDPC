@@ -1,11 +1,13 @@
+
+import requests
+from bs4 import BeautifulSoup
+import lxml
 import sys
 
-from search import *
 from convert import convert
+from search import *
 
-deckname = sys.argv[1]
-
-def main():
+def main(deckname):
     with open(deckname, 'r') as rf:
         lst = ''.join(r for r in rf).split('\n\nSideboard\n')
         if len(lst) != 2:
@@ -13,17 +15,21 @@ def main():
             with open(deckname, 'r') as rf2:
                 lst = ''.join(r for r in rf2).split('\n\nSideboard\n')
 
-    main = deck(lst[0])
-    total = printout(main)
+    deck = proc([Card(card) for card in lst[0].split('\n')])
+
+    total = printout(deck)
 
     if len(lst) == 2 and lst[1] != '':
-        side = deck(lst[1][:-1])
-        s_total = printout(side, mode = "side")
+        side = proc([Card(card) for card in lst[1][:-1].split('\n')])
+        s_total = printout(side, mode = "SIDEBOARD")
     else:
         print("side ) price: 0")
         s_total = 0
 
-    print("\ntotal price (main + side):", total + s_total)
+    print("\nTOTAL PRICE (MAIN + SIDE):", total + s_total)
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 2:
+        main(sys.argv[1])
+    else:
+        print("ERROR ON ARGUMENT(S)")
