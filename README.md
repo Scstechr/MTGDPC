@@ -10,6 +10,7 @@ MTGDPC (`mtgdpc`) enables users to search the cheapest price of given card name 
 - Python 3.6 (or above)
 - Beautiful Soup
 - lxml
+- tqdm
 
 Simply, `pip install -r requirements.txt` to install above mentioned modules.
 
@@ -98,40 +99,43 @@ Sideboard
 #### Output
 ```
 $ python mtgdpc.py decklist/MoMa.txt
-
------------------------------- MAIN DECK ------------------------------
-
-23800 x 4 = 95200    Tundra
-37999 x 4 = 151996   Volcanic Island
-240 x 3 = 720        真鍮の都/City of Brass
-2580 x 4 = 10320     古えの墳墓/Ancient Tomb
-2800 x 4 = 11200     トレイリアのアカデミー/Tolarian Academy
-310 x 4 = 1240       水蓮の花びら/Lotus Petal
-13900 x 4 = 55600    モックス・ダイアモンド/Mox Diamond
-900 x 4 = 3600       魔力の櫃/Mana Vault
-70 x 3 = 210         通電式キー/Voltaic Key
-1950 x 2 = 3900      巻物棚/Scroll Rack
-1010 x 3 = 3030      精神力/Mind Over Matter
-10 x 4 = 40          意外な授かり物/Windfall
-40 x 4 = 160         時のらせん/Time Spiral
-280 x 3 = 840        中断/Abeyance
-4280 x 3 = 12840     直観/Intuition
-15 x 3 = 45          魔力消沈/Power Sink
-36 x 4 = 144         天才のひらめき/Stroke of Genius
-
-main ) price: 351085
-
------------------------------- SIDEBOARD ------------------------------
-
-40 x 4 = 160         ゴリラのシャーマン/Gorilla Shaman
-30 x 4 = 120         寒け/Chill
-25 x 2 = 50          赤霊破/Red Elemental Blast
-25 x 1 = 25          秘儀の否定/Arcane Denial
-2200 x 4 = 8800      不毛の大地/Wasteland
-
-side ) price: 9155
-
-total price (main + side): 360240
+╓────────────────────────────────────────────────────────────────────╖
+║                             MAINBOARD                              ║
+╟────────────────────────────────────────────────────────────────────╢
+║ Tundra                                        │ 19600 x 4 = 78400  ║
+║ Volcanic Island                               │ 37810 x 4 = 151240 ║
+║ 真鍮の都/City of Brass                        │   260 x 3 = 780    ║
+║ 古えの墳墓/Ancient Tomb                       │  1780 x 4 = 7120   ║
+║ トレイリアのアカデミー/Tolarian Academy       │  2150 x 4 = 8600   ║
+║ 水蓮の花びら/Lotus Petal                      │   420 x 4 = 1680   ║
+║ モックス・ダイアモンド/Mox Diamond            │ 17999 x 4 = 71996  ║
+║ 魔力の櫃/Mana Vault                           │   980 x 4 = 3920   ║
+║ 通電式キー/Voltaic Key                        │    70 x 3 = 210    ║
+║ 巻物棚/Scroll Rack                            │  1880 x 2 = 3760   ║
+║ 精神力/Mind Over Matter                       │   530 x 3 = 1590   ║
+║ 意外な授かり物/Windfall                       │     9 x 4 = 36     ║
+║ 時のらせん/Time Spiral                        │  3380 x 4 = 13520  ║
+║ 中断/Abeyance                                 │   220 x 3 = 660    ║
+║ 直観/Intuition                                │  3480 x 3 = 10440  ║
+║ 魔力消沈/Power Sink                           │     9 x 3 = 27     ║
+║ 天才のひらめき/Stroke of Genius               │    50 x 4 = 200    ║
+╟────────────────────────────────────────────────────────────────────╢
+║                                         PRICE │             354179 ║
+╙────────────────────────────────────────────────────────────────────╜
+╓────────────────────────────────────────────────────────────────────╖
+║                             SIDEBOARD                              ║
+╟────────────────────────────────────────────────────────────────────╢
+║ ゴリラのシャーマン/Gorilla Shaman             │    50 x 4 = 200    ║
+║ 寒け/Chill                                    │    30 x 4 = 120    ║
+║ 赤霊破/Red Elemental Blast                    │    45 x 2 = 90     ║
+║ 秘儀の否定/Arcane Denial                      │    25 x 1 = 25     ║
+║ 不毛の大地/Wasteland                          │  3000 x 4 = 12000  ║
+╟────────────────────────────────────────────────────────────────────╢
+║                                         PRICE │              12435 ║
+╙────────────────────────────────────────────────────────────────────╜
+╓────────────────────────────────────────────────────────────────────╖
+║                                   TOTAL PRICE │             366614 ║
+╙────────────────────────────────────────────────────────────────────╜
 
 ```
 ### `decklist/`[5-Color-Aggro](http://mtgwiki.com/wiki/%EF%BC%95%E8%89%B2%E3%83%87%E3%83%83%E3%82%AD)
@@ -172,45 +176,48 @@ total price (main + side): 360240
 #### Output
 ```
 $ python mtgdpc.py decklist/5-Color-Aggro.txt
-
------------------------------- MAIN DECK ------------------------------
-
-790 x 4 = 3160       古代の聖塔/Ancient Ziggurat
-9 x 1 = 9            秘儀の聖域/Arcane Sanctum
-10 x 4 = 40          風変わりな果樹園/Exotic Orchard
-8 x 1 = 8            森/Forest
-9 x 1 = 9            島/Island
-9 x 4 = 36           ジャングルの祭殿/Jungle Shrine
-5 x 1 = 5            山/Mountain
-9 x 1 = 9            平地/Plains
-9 x 3 = 27           野蛮な地/Savage Lands
-9 x 3 = 27           海辺の城塞/Seaside Citadel
-8 x 1 = 8            沼/Swamp
-360 x 4 = 1440       血編み髪のエルフ/Bloodbraid Elf
-20 x 3 = 60          若き群れのドラゴン/Broodmate Dragon
-140 x 2 = 280        戦争のアスラ、ジェナーラ/Jenara, Asura of War
-5790 x 4 = 23160     貴族の教主/Noble Hierarch
-20 x 4 = 80          朽ちゆくヒル/Putrid Leech
-9 x 4 = 36           ロウクスの戦修道士/Rhox War Monk
-10 x 4 = 40          セドラクシスの死霊/Sedraxis Specter
-9 x 4 = 36           長毛のソクター/Woolly Thoctar
-9 x 3 = 27           ナヤの魔除け/Naya Charm
-690 x 4 = 2760       流刑への道/Path to Exile
-
-main ) price: 31257
-
------------------------------- SIDEBOARD ------------------------------
-
-10 x 2 = 20          呪詛術士/Anathemancer
-30 x 2 = 60          戦誉の天使/Battlegrace Angel
-10 x 4 = 40          天界の粛清/Celestial Purge
-10 x 3 = 30          妨げる光/Hindering Light
-80 x 2 = 160         クァーサルの群れ魔道士/Qasali Pridemage
-20 x 2 = 40          領土を滅ぼすもの/Realm Razer
-
-side ) price: 350
-
-total price (main + side): 31607
+╓────────────────────────────────────────────────────────────────────╖
+║                             MAINBOARD                              ║
+╟────────────────────────────────────────────────────────────────────╢
+║ 古代の聖塔/Ancient Ziggurat                   │   680 x 4 = 2720   ║
+║ 秘儀の聖域/Arcane Sanctum                     │     9 x 1 = 9      ║
+║ 風変わりな果樹園/Exotic Orchard               │     9 x 4 = 36     ║
+║ 森/Forest                                     │     8 x 1 = 8      ║
+║ 島/Island                                     │     9 x 1 = 9      ║
+║ ジャングルの祭殿/Jungle Shrine                │     9 x 4 = 36     ║
+║ 山/Mountain                                   │     5 x 1 = 5      ║
+║ 平地/Plains                                   │     9 x 1 = 9      ║
+║ 野蛮な地/Savage Lands                         │     9 x 3 = 27     ║
+║ 海辺の城塞/Seaside Citadel                    │     9 x 3 = 27     ║
+║ 沼/Swamp                                      │     8 x 1 = 8      ║
+║ 血編み髪のエルフ/Bloodbraid Elf               │   280 x 4 = 1120   ║
+║ 若き群れのドラゴン/Broodmate Dragon           │     9 x 3 = 27     ║
+║ 戦争のアスラ、ジェナーラ/Jenara, Asura of War │   110 x 2 = 220    ║
+║ 貴族の教主/Noble Hierarch                     │  4200 x 4 = 16800  ║
+║ 朽ちゆくヒル/Putrid Leech                     │     9 x 4 = 36     ║
+║ ロウクスの戦修道士/Rhox War Monk              │     9 x 4 = 36     ║
+║ セドラクシスの死霊/Sedraxis Specter           │    10 x 4 = 40     ║
+║ 長毛のソクター/Woolly Thoctar                 │     9 x 4 = 36     ║
+║ ナヤの魔除け/Naya Charm                       │     9 x 3 = 27     ║
+║ 流刑への道/Path to Exile                      │   680 x 4 = 2720   ║
+╟────────────────────────────────────────────────────────────────────╢
+║                                         PRICE │              23956 ║
+╙────────────────────────────────────────────────────────────────────╜
+╓────────────────────────────────────────────────────────────────────╖
+║                             SIDEBOARD                              ║
+╟────────────────────────────────────────────────────────────────────╢
+║ 呪詛術士/Anathemancer                         │    10 x 2 = 20     ║
+║ 戦誉の天使/Battlegrace Angel                  │    30 x 2 = 60     ║
+║ 天界の粛清/Celestial Purge                    │    10 x 4 = 40     ║
+║ 妨げる光/Hindering Light                      │    10 x 3 = 30     ║
+║ クァーサルの群れ魔道士/Qasali Pridemage       │    70 x 2 = 140    ║
+║ 領土を滅ぼすもの/Realm Razer                  │    20 x 2 = 40     ║
+╟────────────────────────────────────────────────────────────────────╢
+║                                         PRICE │                330 ║
+╙────────────────────────────────────────────────────────────────────╜
+╓────────────────────────────────────────────────────────────────────╖
+║                                   TOTAL PRICE │              24286 ║
+╙────────────────────────────────────────────────────────────────────╜
 ```
 
 ## Future Enhancements
