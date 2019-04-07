@@ -41,8 +41,8 @@ def main(deckname, save):
     print(TABLH,end='')
     [print(TABBR,end='') for _ in range(NUM1)]
     print(TABRH, TABWL, end='', sep='\n')
-    print(f"\033[{NUM3-12}GTOTAL PRICE {TABBW}", f"\033[{WIDTH-num-1}G{total}", f"\033[{WIDTH}G{TABWL}", end="")
-    print(f"\033[{WIDTH}G{TABWL}")
+    print(f"\033[{NUM3-12}GTOTAL PRICE {TABBW}", f"\033[{WIDTH-num-1}G{total}", end='')
+    print(f"\033[{WIDTH}G{TABWL}", f"\033[{WIDTH}G{TABWL}")
     print(TABLB,end='')
     [print(TABBR,end='') for _ in range(NUM1)]
     print(TABRB)
@@ -50,8 +50,7 @@ def main(deckname, save):
     if save:
         print()
         head, ext = os.path.splitext(deckname)
-        for card in dllist:
-            sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s', shell=True)
+        [sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s', shell=True) for card in dllist]
 
 if __name__ == '__main__':
     main()

@@ -55,7 +55,8 @@ def search(card, path, flag=False):
 @click.option("-n", "--name")
 @click.option("-p", "--path", default="cardchunk")
 @click.option("-s", "--single", is_flag ="False")
-def main(edition, name, path, single):
+@click.option("-m", "--mode", default='')
+def main(edition, name, path, single, mode):
     if edition:
         cards = Card.where(set=edition).all()
         if name:
