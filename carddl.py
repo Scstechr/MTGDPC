@@ -108,9 +108,11 @@ def search(card, path, high, language, flag=False):
 @click.option("-h", "--high", is_flag="False")
 @click.option("-l", "--language", default='en')
 @click.option("-f", "--frmt", default='standard')
-def main(edition, name, path, single, high, language, frmt):
-    if name.count("+"):
-        name = name.split('+')[0]
+@click.option("-u", "--unleash", is_flag="False")
+def main(edition, name, path, single, high, language, frmt, unleash):
+    if name:
+        if name.count("+"):
+            name = name.split('+')[0]
 
     if edition:
         cards = Card.where(set=edition.lower()).all()
@@ -120,14 +122,25 @@ def main(edition, name, path, single, high, language, frmt):
         cards = Card.where(name=name).all()
 
     cards = [card for card in cards if card.image_url]
-    cards = [card for card in cards if card.set in SETS]
-    if frmt == 'modern':
-        cards = [card for card in cards if card.set in MODERN]
+    if unleash:
+        sets = Set.all()
+        SETS_ = [s.code for s in sets]
+        DICT_ = {s.code:s.name for s in sets}
+        dct_ = {s.code:s.release_date.replace('-','') for s in sets if s.code in SETS_}
+        SORTSET_ = {c:r for c, r in sorted(dct_.items(), key=lambda x: x[1])}
 
-    # chronological sort editions
-    sets = {card.set:SORTSET[card.set] for card in cards}
+        # chronological sort editions
+        sets = {card.set:SORTSET_[card.set] for card in cards}
+
+    else:
+        cards = [card for card in cards if card.set in SETS]
+        if frmt == 'modern':
+            cards = [card for card in cards if card.set in MODERN]
+
+        # chronological sort editions
+        sets = {card.set:SORTSET[card.set] for card in cards}
+
     sortset = {c:r for c, r in sorted(sets.items(), key=lambda x: x[1])}
-
     cards = [c for s in sortset for c in cards if c.set == s]
     if not len(cards):
         print(f"\033[31m{name} does not exist in format: {frmt}\033[0m")
@@ -160,6 +173,7 @@ def main(edition, name, path, single, high, language, frmt):
         names = [card.name for card in sets]
         dlist = set(card for card in names if names.count(card) > 1)
 
+    print(f"RESULTS :{len(cards)}")
     for card in cards:
         if single:
             search(card, path, high, language)
