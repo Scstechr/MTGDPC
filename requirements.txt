@@ -1,3 +1,5 @@
 beautifulsoup
 lxml
 tqdm
+requests
+mtgsdk

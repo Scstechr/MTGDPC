@@ -1,5 +1,11 @@
-# MTGDPC
+This repository consists of `mtgdpc` and `carddl`.
+
+# MTGDPC (`mtgdpc`)
 Magic the Gathering Deck Price Checker (for JPN Players).  
+
+Consists of `mtgdpc.py` and `carddl.py`, which `carddl.py` could be utilized independently.  
+`mtgdpc.py` calls `carddl.py` within process if `-s` argument is triggered.  
+Both of them supports `--help` option in order to check arguments and its individual function.
 
 ## About
 
@@ -11,6 +17,8 @@ MTGDPC (`mtgdpc`) enables users to search the cheapest price of given card name 
 - Beautiful Soup
 - lxml
 - tqdm
+- requests
+- mtgsdk
 
 Simply, `pip install -r requirements.txt` to install above mentioned modules.
 
