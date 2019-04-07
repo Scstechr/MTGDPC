@@ -1,0 +1,37 @@
+3 Island
+2 Swamp
+2 Watery Grave
+4 Polluted Delta
+2 Flooded Strand
+2 Darkslick Shores
+2 Shelldock Isle
+1 Oboro, Palace in the Clouds
+4 Field of Ruin
+4 Hedron Crab
+3 Surgical Extraction
+2 Fatal Push
+2 Inquisition of Kozilek
+1 Thoughtseize
+4 Visions of Beyond
+4 Glimpse the Unthinkable
+3 Mesmeric Orb
+3 Mission Briefing
+2 Collective Brutality
+1 Search for Azcanta
+2 Crypt Incursion
+2 Ensnaring Bridge
+4 Archive Trap
+1 Murderous Cut
+
+Sideboard
+1 Surgical Extraction
+3 Extirpate
+1 Dispel
+1 Fatal Push
+2 Collective Brutality
+2 Echoing Truth
+1 Torpor Orb
+1 Crypt Incursion
+1 Dismember
+1 Ensnaring Bridge
+1 Damnation
