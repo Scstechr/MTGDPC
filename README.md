@@ -7,17 +7,21 @@ Both of them supports `--help` option in order to check arguments and its indivi
 
 ## About
 
-MTGDPC (`mtgdpc`) enables users to search the cheapest price of given card name via [Wisdom Guild](http://www.wisdom-guild.net).  
-If `-s`(`--save`) option is triggered, it scrapes card image contained in given decklist via `mtgsdk` (official API) or [scryfall](https://scryfall.com/) (if `-h`(`--high`, high-res option) is active).
+MTGDPC (`mtgdpc`) enables users to search the cheapest price for a given card name via [Wisdom Guild](http://www.wisdom-guild.net).  
+If `-s`(`--save`) option is triggered, it scrapes card image contained in the decklist via:
+
+- `mtgsdk` (official API) 
+- [scryfall.com](https://scryfall.com/) (if `-h`(`--high`, high-res option) is active).
 
 ### Requirements
 
-- Python 3.6 (or above)
-- Beautiful Soup
-- lxml
-- tqdm
-- requests
-- mtgsdk
+- [x] Python 3.6 (or above)
+
+- [x] Beautiful Soup
+- [x] lxml
+- [x] tqdm
+- [x] requests
+- [x] mtgsdk
 
 Simply, `pip install -r requirements.txt` to install above mentioned modules.
 
@@ -107,52 +111,16 @@ Sideboard
 
 <img src="https://user-images.githubusercontent.com/28348249/55680838-183b9f00-595a-11e9-8973-c0ddb1dfa372.png" alt="MoMa_Snapshot" title="MoMa">
 
-### `decklist/`[5-Color-Aggro](http://mtgwiki.com/wiki/%EF%BC%95%E8%89%B2%E3%83%87%E3%83%83%E3%82%AD)
-```
-5-Color-Aggro [2]
-土地 (24)
-4	古代の聖塔/Ancient Ziggurat
-1	秘儀の聖域/Arcane Sanctum
-4	風変わりな果樹園/Exotic Orchard
-1	森/Forest
-1	島/Island
-4	ジャングルの祭殿/Jungle Shrine
-1	山/Mountain
-1	平地/Plains
-3	野蛮な地/Savage Lands
-3	海辺の城塞/Seaside Citadel
-1	沼/Swamp
-クリーチャー (29)
-4	血編み髪のエルフ/Bloodbraid Elf
-3	若き群れのドラゴン/Broodmate Dragon
-2	戦争のアスラ、ジェナーラ/Jenara, Asura of War
-4	貴族の教主/Noble Hierarch
-4	朽ちゆくヒル/Putrid Leech
-4	ロウクスの戦修道士/Rhox War Monk
-4	セドラクシスの死霊/Sedraxis Specter
-4	長毛のソクター/Woolly Thoctar
-呪文 (7)
-3	ナヤの魔除け/Naya Charm
-4	流刑への道/Path to Exile
-サイドボード (15)
-2	呪詛術士/Anathemancer
-2	戦誉の天使/Battlegrace Angel
-4	天界の粛清/Celestial Purge
-3	妨げる光/Hindering Light
-2	クァーサルの群れ魔道士/Qasali Pridemage
-2	領土を滅ぼすもの/Realm Razer
-```
-#### Output
 
-<img src="https://user-images.githubusercontent.com/28348249/55680837-140f8180-595a-11e9-96b1-88fac430a149.png" alt="5ColorAggro_Snapshot" title="5ColorAggro">
 
 ## Future Enhancements
 
 - Introduce:
-	- `Pandas` to manage it with `DataFrames`.
-	- `Click` for better CUI experience.
-- Handle more format of decklists.
+  - [ ] Pandas` to manage it with `DataFrames`.
+  - [x] Click` for better CUI experience.
+- [ ] Handle more format of decklists.
+- [ ] Refactoring for a more sophisticated structure.
 - Add:
-	- Card info screen with capability of searching individual prices.
-	- Mana info such as ratio and pie.
+  - [ ] Card info screen with capability of searching individual prices.
+  - [ ] Mana info such as ratio and pie.
 
