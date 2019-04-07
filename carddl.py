@@ -17,7 +17,11 @@ MODERN = {c for c in SORTSET if int(SORTSET[c]) > 20030526}
 BASIC = ['Plains', 'Swamp', 'Island', 'Mountain', 'Forest']
 
 def downloader(card, output, url, language, replace=False):
-    print(f"{output} \033[70G| {DICT[card.set]} ({card.set})")
+    if len(output) > 50:
+        out = output[:40] + '...' 
+    else:
+        out = output
+    print(f"{out} \033[70G| {DICT[card.set]} ({card.set})")
     if replace and os.path.exists(output):
         os.remove(output)
     try:
@@ -39,12 +43,18 @@ def save(card, output):
     lst = [card]
     if card.layout == 'transform':
         lst.append(Card.where(set=card.set).where(name=card.names[1]).all()[0])
-    for card in lst:
+    for idx, card in enumerate(lst):
         dirname = os.path.dirname(output)
         if card.layout == 'split':
             card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
             output = os.path.join(dirname, f"{card.name}+{card_.name}_en.jpg")
-        else:
+        elif card.layout == 'transform':
+            card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
+            if not idx:
+                output = os.path.join(dirname, f"{card.name}_{card_.name}_en_a.jpg")
+            else:
+                output = os.path.join(dirname, f"{card.name}_{card_.name}_en_b.jpg")
+        elif card.name not in BASIC:
             output = os.path.join(dirname, f"{card.name}_en.jpg")
         downloader(card, output, card.image_url, 'en')
 
@@ -53,6 +63,8 @@ def hr_save(card, output, language):
     if card.layout == 'transform':
         card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
         html += f"-{card_.name.lower().replace(' ','-')}?back"
+        dirname = os.path.dirname(output)
+        output = os.path.join(dirname, f"{card.name}_{card_.name}_a_{language}.jpg")
     if card.layout == 'split':
         card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
         html += f"-{card_.name.lower().replace(' ','-')}"
@@ -66,7 +78,7 @@ def hr_save(card, output, language):
     if card.layout == 'transform':
         img_url = soup.find_all("div", class_="card-image-back")[0].find('img')['src']
         dirname = os.path.dirname(output)
-        output = os.path.join(dirname, f"{card_.name}_{language}.jpg")
+        output = os.path.join(dirname, f"{card.name}_{card_.name}_b_{language}.jpg")
         print("HIGH",end=' | ')
         downloader(card, output, img_url.replace('/en/',f'/{language}/'), language, True)
 
@@ -76,31 +88,14 @@ def search(card, path, high, language, flag=False):
     else:
         output = os.path.join(path, f"{card.name}_{language}.jpg")
 
-    if card.layout == 'split':
-        card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
+    dlist = {card.number:x for x, card in enumerate(Card.where(set=card.set).where(name=card.name).all())}
+    if flag and len(dlist) > 1:
+        output = os.path.join(path, card.set, f'{card.name}_{language}_{dlist[card.number]}.jpg')
     if os.path.exists(output):
-        if flag:
-            d = []
-            for f in os.listdir(os.path.join(path, card.set)):
-                if f.count(card.name):
-                    d.append(f)
-            if len(d):
-                if d[-1].count("_"):
-                    head = d[-1].split("_")
-                    num = int(head[1][0]) + 1
-                    output = head[0] + f"_{num}.jpg"
-                else:
-                    head, ext = os.path.splitext(d[0])
-                    output = head + "_1" + ext
-                    shutil.move(d[0], head + "_0" + ext)
-                output = os.path.join(path, card.set, output)
-                hr_save(card, output, language) if high else save(card, output)
-                
+        if high:
+            hr_save(card, output, language)
         else:
-            if high:
-                hr_save(card, output, language)
-            else:
-                print(f"{output} ALREADY EXISTS!")
+            print(f"{output} ALREADY EXISTS!")
 
     else: 
         hr_save(card, output, language) if high else save(card, output)
@@ -118,9 +113,9 @@ def main(edition, name, path, single, high, language, frmt):
         name = name.split('+')[0]
 
     if edition:
-        cards = Card.where(set=edition).all()
+        cards = Card.where(set=edition.lower()).all()
         if name:
-            cards = cards.where(name=name).all()
+            cards = Card.where(set=edition.lower()).where(name=name).all()
     else:
         cards = Card.where(name=name).all()
 
@@ -166,10 +161,10 @@ def main(edition, name, path, single, high, language, frmt):
         dlist = set(card for card in names if names.count(card) > 1)
 
     for card in cards:
-        if card.name in dlist and not single:
-            search(card, path, high, language, True)
-        else:
+        if single:
             search(card, path, high, language)
+        else:
+            search(card, path, high, language, True)
 
 if __name__ == "__main__":
     main()
