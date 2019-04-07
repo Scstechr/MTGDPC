@@ -5,94 +5,60 @@ from bs4 import BeautifulSoup
 class Card():
     def __init__(self, string):
         lst = string.split(' ')
-        self.num = lst[0]
+        self.num = int(lst[0])
         self.name = ' '.join(s for s in lst[1:])
+        self.jname = ''
+        self.price = 0
 
-    def print(self):
-        print(self.num, self.name)
+    def __repr__(self):
+        return f"{self.num}, {self.name}, {self.price}"
 
-def deck(string):
-    deck = string.split('\n')
-    return [Card(card) for card in deck]
+def search(card):
+    html = htmlgen(card.name.replace(' (b)',''), 'w')
+    r = requests.get(html)
+    soup = BeautifulSoup(r.text, 'lxml')
 
-def proc(d):
-    from multiprocessing import Pool
+    tables = soup.find_all('table')
+    try:
+        card.price = int(tables[3].find_all('b')[0].text.replace(',',''))
+    except:
+        card.price = int(tables[1].find_all('b')[0].text.replace(',',''))
+
+    for table in tables[:2]:
+        info = table.find_all('tr')
+        if info[0].text.count('カード名'):
+            string = info[0].text.replace('\n', '')[4:]
+            string = string.replace('\t', '').replace('（','_').replace('）','_')
+            lst = string.split('_')[:-1]
+            card.name = ' '.join([s for idx, s in enumerate(lst) if not idx%2])
+            break
+
+    return card
+
+def proc(deck):
     import multiprocessing as multi
 
     maxproc = multi.cpu_count()
 
-    with Pool(processes=maxproc) as p:
-       lst = p.map(search, d)
+    with multi.Pool(processes=maxproc) as p:
+       lst = p.map(search, deck)
 
     return lst
-
-def printout(d, mode = "main"):
-    lst = proc(d)
-    l = ''.join('-' for _ in range(30))
-    print(f"\n{l} MAIN DECK {l}\n") if mode == "main" else print(f"\n{l} SIDEBOARD {l}\n")
-    total = 0
-    for card, d in zip(d, lst):
-        price = int(d['price'].replace(',',''))
-        num = int(card.num)
-        total += price * num
-        print(f"{price} x {num} = {price*num}".ljust(20), end=' ')
-        print(d['name'])
-    string = 'main' if mode == 'main' else 'side'
-    print(f"\n{string} ) price:", total)
-    return total
-
-def replacetags(string):
-    string = string.replace('カード名', '')
-    string = string.replace('マナコスト', '')
-    string = string.replace('タイプ', '')
-    string = string.replace('テキスト', '')
-    string = string.replace('オラクル', '')
-    string = string.replace('フレーバ', '')
-    string = string.replace('イラスト', '')
-    string = string.replace('セット等', '')
-    string = string.replace('\n',' ')
-    string = string.replace('\t','')
-    return string[1:]
 
 def htmlgen(cardname, shop = 's'):
     searchname = '+'.join(cardname.split(' '))
     html = f"http://whisper.wisdom-guild.net/card/{searchname}/"
 
     return html
-        
-def search(card):
-    cardname = card.name
-    l = []
-    html = htmlgen(cardname.replace(' (b)',''), 'w')
-    r = requests.get(html)
-    soup = BeautifulSoup(r.text, 'lxml')
 
-    d = {}
-    tables = soup.find_all('table')
-    try:
-        d['price'] = tables[3].find_all('b')[0].text
-    except:
-        d['price'] = tables[1].find_all('b')[0].text
-    for table in tables:
-        try:
-            info = table.find_all('tr')
-            if info[0].text.count('カード名') > 0:
-                name = replacetags(info[0].text.strip())[:-1]
-                st   = replacetags(info[7].text.strip()).split(", ")
-                if name.count('（') > 0:
-                    d['name'] = name[1:name.rfind('（') - 1]
-                else:
-                    d['name'] = card.name
-                d['cost']     = replacetags(info[1].text.strip())
-                d['type']     = replacetags(info[2].text.strip())[1:]
-                d['text']     = replacetags(info[3].text.strip())
-                d['oracle']   = replacetags(info[4].text.strip())
-                d['flavor']   = replacetags(info[5].text.strip())
-                d['illust']   = replacetags(info[6].text.strip())
-                d['rarelity'] = st[0]
-                d['sets']     = st[1]
-                break
-        except:
-            pass
-    return d
+def printout(deck, mode='MAIN DECK'):
+    l = ''.join('-' for _ in range(30))
+    print(f"\n{l} {mode} {l}\n")
+    total = 0
+    for card in deck:
+        add = card.price * card.num
+        total += add
+        print(f"{card.price} x {card.num} = {add}".ljust(20), card.name)
+    print(f"\n{mode} ) PRICE:", total)
+    return total
 
