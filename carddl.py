@@ -11,6 +11,8 @@ import requests
 sets = Set.all()
 SETS = [s.code for s in sets if s.type in ['expansion', 'core']]
 DICT = {s.code:s.name for s in sets}
+dct = {s.code:s.release_date.replace('-','') for s in sets if s.code in SETS}
+SORTSET = {c:r for c, r in sorted(dct.items(), key=lambda x: x[1])}
 
 def downloader(card, output, url, language, replace=False):
     print(f"{output} \033[70G| {DICT[card.set]} ({card.set})")
@@ -37,7 +39,11 @@ def save(card, output):
         lst.append(Card.where(set=card.set).where(name=card.names[1]).all()[0])
     for card in lst:
         dirname = os.path.dirname(output)
-        output = os.path.join(dirname, f"{card.name}_en.jpg")
+        if card.layout == 'split':
+            card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
+            output = os.path.join(dirname, f"{card.name}+{card_.name}_en.jpg")
+        else:
+            output = os.path.join(dirname, f"{card.name}_en.jpg")
         downloader(card, output, card.image_url, 'en')
 
 def hr_save(card, output, language):
@@ -45,6 +51,11 @@ def hr_save(card, output, language):
     if card.layout == 'transform':
         card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
         html += f"-{card_.name.lower().replace(' ','-')}?back"
+    if card.layout == 'split':
+        card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
+        html += f"-{card_.name.lower().replace(' ','-')}"
+        dirname = os.path.dirname(output)
+        output = os.path.join(dirname, f"{card.name}+{card_.name}_{language}.jpg")
     r = requests.get(html)
     soup = BeautifulSoup(r.text, 'lxml')
     img_url = soup.find_all("div", class_="card-image-front")[0].find('img')['src']
@@ -63,6 +74,8 @@ def search(card, path, high, language, flag=False):
     else:
         output = os.path.join(path, f"{card.name}_{language}.jpg")
 
+    if card.layout == 'split':
+        card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
     if os.path.exists(output):
         if flag:
             d = []
@@ -97,7 +110,11 @@ def search(card, path, high, language, flag=False):
 @click.option("-s", "--single", is_flag ="False")
 @click.option("-h", "--high", is_flag="False")
 @click.option("-l", "--language", default='en')
-def main(edition, name, path, single, high, language):
+@click.option("-f", "--frmt", default='standard')
+def main(edition, name, path, single, high, language, frmt):
+    if name.count("+"):
+        name = name.split('+')[0]
+
     if edition:
         cards = Card.where(set=edition).all()
         if name:
@@ -108,11 +125,34 @@ def main(edition, name, path, single, high, language):
     cards = [card for card in cards if card.image_url]
     cards = [card for card in cards if card.set in SETS]
 
+    # chronological sort editions
+    sets = {card.set:SORTSET[card.set] for card in cards}
+    sortset = {c:r for c, r in sorted(sets.items(), key=lambda x: x[1])}
+
+    if frmt == "modern":
+        flag = False
+        keys = []
+        for s in sortset:
+            if s == '8ED':
+                flag = True
+            if not flag:
+                keys.append(s)
+        for key in keys:
+            del sortset[key]
+
+    cards = [c for s in sortset for c in cards if c.set == s]
+    if not len(cards):
+        print(f"\033[31m{name} does not exist in format: {frmt}\033[0m")
+        exit()
+
     if name:
         cards = [card for card in cards if card.name == name]
 
     if single:
-        cards = cards[:1]
+        if frmt == 'standard':
+            cards = cards[-1:]
+        else:
+            cards = cards[:1]
 
     if path == "cardchunk":
         for card in cards:
@@ -133,7 +173,7 @@ def main(edition, name, path, single, high, language):
         dlist = set(card for card in names if names.count(card) > 1)
 
     for card in cards:
-        if card.name in dlist:
+        if card.name in dlist and not single:
             search(card, path, high, language, True)
         else:
             search(card, path, high, language)
