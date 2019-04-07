@@ -7,8 +7,8 @@ import lxml
 import sys
 import tqdm
 
-from convert import convert
-from search import *
+from src.convert import convert
+from src.search import *
 
 @click.command()
 @click.argument("deckname")
