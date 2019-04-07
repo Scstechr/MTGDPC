@@ -26,7 +26,7 @@ class Card():
         lst = string.split(' ')
         self.num = int(lst[0])
         self.name = ' '.join(s for s in lst[1:])
-        self.jname = ''
+        self.ename = self.name
         self.price = 0
 
     def __repr__(self):
@@ -44,15 +44,18 @@ def search(card):
         card.price = int(tables[1].find_all('b')[0].text.replace(',',''))
 
     for table in tables[:2]:
-        info = table.find_all('tr')
-        if info[0].text.count('カード名'):
-            string = info[0].text.replace('\n', '')[4:]
-            string = string.replace('\t', '').replace('（','_').replace('）','_')
-            lst = string.split('_')
-            if len(lst) > 2:
-                lst = lst[:-1]
-            card.name = ' '.join([s for idx, s in enumerate(lst) if not idx%2])
-            break
+        try:
+            info = table.find_all('tr')
+            if info[0].text.count('カード名'):
+                string = info[0].text.replace('\n', '')[4:]
+                string = string.replace('\t', '').replace('（','_').replace('）','_')
+                lst = string.split('_')
+                if len(lst) > 2:
+                    lst = lst[:-1]
+                card.name = ' '.join([s for idx, s in enumerate(lst) if not idx%2])
+                break
+        except:
+            pass
 
     return card
 

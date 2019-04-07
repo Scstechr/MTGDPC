@@ -1,13 +1,19 @@
-
+import os
+import click
+import subprocess as sp
 import requests
 from bs4 import BeautifulSoup
 import lxml
 import sys
+import tqdm
 
 from convert import convert
 from search import *
 
-def main(deckname):
+@click.command()
+@click.argument("deckname")
+@click.option("-s", "--save", is_flag="False")
+def main(deckname, save):
     with open(deckname, 'r') as rf:
         lst = ''.join(r for r in rf).split('\n\nSideboard\n')
         if len(lst) != 2:
@@ -16,11 +22,15 @@ def main(deckname):
                 lst = ''.join(r for r in rf2).split('\n\nSideboard\n')
 
     deck = proc([Card(card) for card in lst[0].split('\n')])
+    if save:
+        dllist = deck
 
     total = printout(deck)
 
     if len(lst) == 2 and lst[1] != '':
         side = proc([Card(card) for card in lst[1][:-1].split('\n')])
+        if save:
+            dllist += side
         s_total = printout(side, mode = "SIDEBOARD")
     else:
         print("side ) price: 0")
@@ -37,8 +47,12 @@ def main(deckname):
     [print(TABBR,end='') for _ in range(NUM1)]
     print(TABRB)
 
-if __name__ == "__main__":
-    if len(sys.argv) == 2:
-        main(sys.argv[1])
-    else:
-        print("ERROR ON ARGUMENT(S)")
+    if save:
+        print()
+        head, ext = os.path.splitext(deckname)
+        for card in dllist:
+            sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s', shell=True)
+
+
+if __name__ == '__main__':
+    main()

@@ -22,5 +22,5 @@ def convert(deckname):
         sp.call(f'echo "{item.strip()}" >> {deckname}', shell=True)
 
 if __name__ == '__main__':
-    deckname = '5-Color-Aggro.txt'
+    deckname = 'GruulAggro.txt'
     convert(deckname)
