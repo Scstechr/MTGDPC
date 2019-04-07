@@ -26,7 +26,16 @@ def main(deckname):
         print("side ) price: 0")
         s_total = 0
 
-    print("\nTOTAL PRICE (MAIN + SIDE):", total + s_total)
+    total += s_total
+    num = len(str(total))
+    print(TABLH,end='')
+    [print(TABBR,end='') for _ in range(NUM1)]
+    print(TABRH, TABWL, end='', sep='\n')
+    print(f"\033[{NUM3-12}GTOTAL PRICE {TABBW}", f"\033[{WIDTH-num-1}G{total}", f"\033[{WIDTH}G{TABWL}", end="")
+    print(f"\033[{WIDTH}G{TABWL}")
+    print(TABLB,end='')
+    [print(TABBR,end='') for _ in range(NUM1)]
+    print(TABRB)
 
 if __name__ == "__main__":
     if len(sys.argv) == 2:
