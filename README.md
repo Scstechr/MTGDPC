@@ -2,12 +2,13 @@
 Magic the Gathering Deck Price Checker (for JPN Players).  
 
 Consists of `mtgdpc.py` and `carddl.py`, which `carddl.py` could be utilized independently.  
-`mtgdpc.py` calls `carddl.py` within process if `-s` argument is triggered.  
+`mtgdpc.py` calls `carddl.py` within process if `-s`(`--save`) argument is triggered.  
 Both of them supports `--help` option in order to check arguments and its individual function.
 
 ## About
 
-MTGDPC (`mtgdpc`) enables users to search the cheapest price of given card name via [Wisdom Guild](http://www.wisdom-guild.net).
+MTGDPC (`mtgdpc`) enables users to search the cheapest price of given card name via [Wisdom Guild](http://www.wisdom-guild.net).  
+If `-s`(`--save`) option is triggered, it scrapes card image contained in given decklist via `mtgsdk` (official API) or [scryfall](https://scryfall.com/) (if `-h`(`--high`, high-res option) is active).
 
 ### Requirements
 
