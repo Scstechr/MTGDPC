@@ -1,5 +1,5 @@
 # MTGDPC
-Magic the Gathering Deck Price Checker (for JPN Players).  
+Magic the Gathering Deck Price Checker (mainly for JPN Players).  
 
 Consists of `mtgdpc.py` and `carddl.py`, which `carddl.py` could be utilized independently.  
 `mtgdpc.py` calls `carddl.py` within process if `-s`(`--save`) argument is triggered.  
