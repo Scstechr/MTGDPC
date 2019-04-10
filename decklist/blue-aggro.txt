@@ -1,0 +1,23 @@
+21 Island
+4 Siren Stormtamer
+4 Slither Blade
+4 Merfolk Trickster
+2 Baral, Chief of Compliance
+4 Tempest Djinn
+2 Nimble Obstructionist
+4 Curious Obsession
+2 Dive Down
+2 Spell Pierce
+1 Unsummon
+3 Chart a Course
+3 Essence Scatter
+4 Wizard's Retort
+
+Sideboard
+4 Diamond Mare
+3 Negate
+1 Essence Scatter
+1 Jace's Defeat
+2 Sleep
+3 Syncopate
+1 Aethersphere Harvester
