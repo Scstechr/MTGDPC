@@ -30,14 +30,14 @@ def main(deckname, save, high, frmt, lang):
 
     deck = proc([Card(card) for card in lst[0].split('\n')])
     if save:
-        dllist = deck
+        dllist = [deck]
 
     total = printout(deck)
 
     if len(lst) == 2 and lst[1] != '':
         side = proc([Card(card) for card in lst[1][:-1].split('\n')])
         if save:
-            dllist += side
+            dllist += [side]
         s_total = printout(side, mode = "SIDEBOARD")
     else:
         print("side ) price: 0")
@@ -56,11 +56,18 @@ def main(deckname, save, high, frmt, lang):
 
     if save:
         print()
+        basename = os.path.basename(deckname)
+        title, ext = os.path.splitext(basename)
         head, ext = os.path.splitext(deckname)
-        arg = '-h' if high else ''
-        arg += f' -f{frmt}' if frmt != 'standard'  else ''
-        arg += f' -l {lang}' if lang != 'en' else ''
-        [sp.call(f'python carddl.py -n "{card.ename}" -p "{head}" -s {arg}', shell=True) for card in dllist]
+        for board, deck in enumerate(dllist):
+            for idx, card in enumerate(deck):
+                arg = '-h' if high else ''
+                arg += f' -f {frmt}' if frmt != 'standard'  else ''
+                arg += f' -l {lang}' if lang != 'en' else ''
+                num = str(idx).zfill(2)
+                arg += f' -c {title}_M{num}' if not board else f' -c {title}_S{num}'
+                cmd = f'python carddl.py -n "{card.ename}" -p "{head}" -s {arg}'
+                sp.call(cmd, shell=True)
 
 if __name__ == '__main__':
     main()
