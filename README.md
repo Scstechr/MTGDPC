@@ -113,7 +113,7 @@ Sideboard
 
 ### `decklist/BlueMonoMerfolk.txt`
 This example shows when `-s` (with `-h`) is triggered.  
-Also, if you set format (e.g., `-f modern`), resulst of cards will be reflected.
+Also, if you set format (e.g., `-f modern`), results of cards will be reflected.
 
 <img src="https://user-images.githubusercontent.com/28348249/55958945-bd30e180-5ca4-11e9-900e-b409e21a107b.png" alt="BlueMonoMerfolk_Snapshot" title="BMM">
 
