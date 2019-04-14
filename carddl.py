@@ -39,7 +39,8 @@ def downloader(card, output, url, language, replace=False):
         print(card.name, card.set, url)
         print("DOWNLOAD ERROR")
 
-def save(card, output):
+def save(card, output, language, custom):
+    numstr = custom if custom else card.number.zfill(3)
     lst = [card]
     if card.layout == 'transform':
         lst.append(Card.where(set=card.set).where(name=card.names[1]).all()[0])
@@ -47,58 +48,73 @@ def save(card, output):
         dirname = os.path.dirname(output)
         if card.layout == 'split':
             card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
-            output = os.path.join(dirname, f"{card.name}+{card_.name}_en.jpg")
+            output = os.path.join(dirname, f"{numstr}_{card.name}+{card_.name}_en.jpg")
         elif card.layout == 'transform':
             card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
             if not idx:
-                output = os.path.join(dirname, f"{card.name}_{card_.name}_en_a.jpg")
+                output = os.path.join(dirname, f"{numstr}_{card.name}_{card_.name}_en_a.jpg")
             else:
-                output = os.path.join(dirname, f"{card.name}_{card_.name}_en_b.jpg")
+                output = os.path.join(dirname, f"{numstr}_{card.name}_{card_.name}_en_b.jpg")
         elif card.name not in BASIC:
-            output = os.path.join(dirname, f"{card.name}_en.jpg")
+            output = os.path.join(dirname, f"{numstr}_{card.name}_en.jpg")
+        if language != 'en':
+            output = output.replace('_en.jpg', f'_{language}.jpg')
         downloader(card, output, card.image_url, 'en')
 
-def hr_save(card, output, language):
+def hr_save(card, output, language, custom):
+    numstr = custom if custom else card.number.zfill(3)
     html = f"https://scryfall.com/card/{card.set.lower()}/{card.number}/{card.name.lower().replace(' ','-')}"
-    if card.layout == 'transform':
-        card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
-        html += f"-{card_.name.lower().replace(' ','-')}?back"
-        dirname = os.path.dirname(output)
-        output = os.path.join(dirname, f"{card.name}_{card_.name}_a_{language}.jpg")
-    if card.layout == 'split':
+    flag = True
+    dirname = os.path.dirname(output)
+    if card.names:
         card_ = Card.where(set=card.set).where(name=card.names[1]).all()[0]
         html += f"-{card_.name.lower().replace(' ','-')}"
-        dirname = os.path.dirname(output)
-        output = os.path.join(dirname, f"{card.name}+{card_.name}_{language}.jpg")
+
     r = requests.get(html)
     soup = BeautifulSoup(r.text, 'lxml')
-    img_url = soup.find_all("div", class_="card-image-front")[0].find('img')['src']
-    print("HIGH",end=' | ')
-    downloader(card, output, img_url.replace('/en/',f'/{language}/'), language, True)
-    if card.layout == 'transform':
-        img_url = soup.find_all("div", class_="card-image-back")[0].find('img')['src']
-        dirname = os.path.dirname(output)
-        output = os.path.join(dirname, f"{card.name}_{card_.name}_b_{language}.jpg")
-        print("HIGH",end=' | ')
-        downloader(card, output, img_url.replace('/en/',f'/{language}/'), language, True)
+    img_tag = soup.find_all("div", class_="card-image-front")[0].find('img')
+    img_url = img_tag['src'].replace('/en/',f'/{language}/')
+    alt_title = img_tag['title'].replace(f' ({card.set.upper()})', '').split(' // ')
 
-def search(card, path, high, language, flag=False):
+    if len(alt_title) > 1:
+        flag = validDuplit(card, output, alt_title, language)
+        if card.layout == 'transform':
+            output = os.path.join(dirname, f"{numstr}a_{alt_title[0]}_{language}.jpg")
+            output2 = os.path.join(dirname, f"{numstr}b_{alt_title[1]}_{language}.jpg")
+        elif card.layout == 'split':
+            output = os.path.join(dirname, f"{numstr}_{alt_title[0]}+{alt_title[1]}_{language}.jpg")
+    else:
+        output = os.path.join(dirname, f"{numstr}_{alt_title[0]}_{language}.jpg")
+
+    print("HIGH",end=' | ')
+    downloader(card, output, img_url, language, True)
+    if card.layout == 'transform':
+        img_tag = soup.find_all("div", class_="card-image-back")[0].find('img')
+        img_url = img_tag['src'].replace('/en/',f'/{language}/')
+        print("HIGH",end=' | ')
+        downloader(card, output2, img_url, language, True)
+
+def search(card, path, high, language, custom, flag=False):
+
     if path == "cardchunk":
         output = os.path.join(path, card.set, f"{card.name}_{language}.jpg")
+        if flag:
+            output = os.path.join(path, card.set, f"{card.number.zfill(3)}_{card.name}_{language}.jpg")
     else:
         output = os.path.join(path, f"{card.name}_{language}.jpg")
+        if custom:
+            output = os.path.join(path, f"{custom}_{card.name}_{language}.jpg")
+        if flag:
+            output = os.path.join(path, f"{card.number.zfill(3)}_{card.name}_{language}.jpg")
 
-    dlist = {card.number:x for x, card in enumerate(Card.where(set=card.set).where(name=card.name).all())}
-    if flag and len(dlist) > 1:
-        output = os.path.join(path, card.set, f'{card.name}_{language}_{dlist[card.number]}.jpg')
     if os.path.exists(output):
         if high:
-            hr_save(card, output, language)
+            hr_save(card, output, language, custom)
         else:
             print(f"{output} ALREADY EXISTS!")
 
     else: 
-        hr_save(card, output, language) if high else save(card, output)
+        hr_save(card, output, language, custom) if high else save(card, output, language, custom)
 
 exp_e = "Give specific name of a set."
 exp_n = "Give specific name of a card."
@@ -108,6 +124,7 @@ exp_h = "High-res option for images."
 exp_l = "Select en/ja (en is default)."
 exp_f = "Select format such as 'modern'."
 exp_u = "Unbound to all cards ever released."
+exp_c = "Custom Header"
 @click.command()
 @click.option("-e", "--edition", help=exp_e)
 @click.option("-n", "--name", help=exp_n)
@@ -117,7 +134,8 @@ exp_u = "Unbound to all cards ever released."
 @click.option("-l", "--language", default='en', help=exp_l)
 @click.option("-f", "--frmt", default='standard', help=exp_f)
 @click.option("-u", "--unleash", is_flag="False", help=exp_u)
-def main(edition, name, path, single, high, language, frmt, unleash):
+@click.option("-c", "--custom", default=None, help=exp_u)
+def main(edition, name, path, single, high, language, frmt, unleash, custom):
     if name:
         if name.count("+"):
             name = name.split('+')[0]
@@ -176,21 +194,20 @@ def main(edition, name, path, single, high, language, frmt, unleash):
         if not os.path.exists(outdir):
             os.makedirs(outdir)
 
-    for card in cards:
+    for card in cards[20:30]:
         if not edition:
             sets = Card.where(set=card.set).all()
         else:
             sets = cards
         names = [card.name for card in sets]
-        dlist = set(card for card in names if names.count(card) > 1)
 
     if not single:
         print(f"RESULTS :{len(cards)}")
     for card in cards:
         if single:
-            search(card, path, high, language)
+            search(card, path, high, language, custom)
         else:
-            search(card, path, high, language, True)
+            search(card, path, high, language, custom, True)
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 # MTGDPC
-Magic the Gathering Deck Price Checker (for JPN Players).  
+Magic the Gathering Deck Price Checker (mainly for JPN Players).  
 
 Consists of `mtgdpc.py` and `carddl.py`, which `carddl.py` could be utilized independently.  
 `mtgdpc.py` calls `carddl.py` within process if `-s`(`--save`) argument is triggered.  
@@ -111,7 +111,11 @@ Sideboard
 
 <img src="https://user-images.githubusercontent.com/28348249/55680838-183b9f00-595a-11e9-8973-c0ddb1dfa372.png" alt="MoMa_Snapshot" title="MoMa">
 
+### `decklist/BlueMonoMerfolk.txt`
+This example shows when `-s` (with `-h`) is triggered.  
+Also, if you set format (e.g., `-f modern`), results of cards will be reflected.
 
+<img src="https://user-images.githubusercontent.com/28348249/55958945-bd30e180-5ca4-11e9-900e-b409e21a107b.png" alt="BlueMonoMerfolk_Snapshot" title="BMM">
 
 ## Future Enhancements
 
