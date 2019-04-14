@@ -1,0 +1,27 @@
+19 Island
+4 Merfolk Trickster
+1 Mist-Cloaked Herald
+4 Pteramander
+4 Siren Stormtamer
+4 Tempest Djinn
+1 Chart a Course
+4 Curious Obsession
+4 Dive Down
+1 Entrancing Melody
+2 Essence Capture
+1 Negate
+4 Opt
+3 Spell Pierce
+4 Wizard's Retort
+
+Sideboard
+2 Deep Freeze
+2 Diamond Mare
+1 Disdainful Stroke
+1 Entrancing Melody
+1 Essence Capture
+2 Exclusion Mage
+1 Faerie Duelist
+3 Negate
+1 Sleep
+1 Surge Mare

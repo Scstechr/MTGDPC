@@ -145,7 +145,7 @@ def main(edition, name, path, single, high, language, frmt, unleash):
 
     else:
         cards = [card for card in cards if card.set in SETS]
-        if frmt == 'modern':
+        if frmt == 'modern' or name in BASIC:
             cards = [card for card in cards if card.set in MODERN]
 
         # chronological sort editions
@@ -161,7 +161,7 @@ def main(edition, name, path, single, high, language, frmt, unleash):
         cards = [card for card in cards if card.name == name]
 
     if single:
-        if frmt == 'standard':
+        if frmt in ['standard'] or name in BASIC:
             cards = cards[-1:]
         else:
             cards = cards[:1]
