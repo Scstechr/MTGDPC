@@ -5,6 +5,9 @@ Consists of `mtgdpc.py` and `carddl.py`, which `carddl.py` could be utilized ind
 `mtgdpc.py` calls `carddl.py` within process if `-s`(`--save`) argument is triggered.  
 Both of them supports `--help` option in order to check arguments and its individual function.
 
+`cardset.py` added for searching for card sets (expansions, core sets etc.).  
+This later will be expanded to search for prices of each boxes.
+
 ## About
 
 MTGDPC (`mtgdpc`) enables users to search the cheapest price for a given card name via [Wisdom Guild](http://www.wisdom-guild.net).  
