@@ -77,7 +77,6 @@ def hr_save(card, output, language, custom):
     alt_title = img_tag['title'].replace(f' ({card.set.upper()})', '').split(' // ')
 
     if len(alt_title) > 1:
-        flag = validDuplit(card, output, alt_title, language)
         if card.layout == 'transform':
             output = os.path.join(dirname, f"{numstr}a_{alt_title[0]}_{language}.jpg")
             output2 = os.path.join(dirname, f"{numstr}b_{alt_title[1]}_{language}.jpg")
@@ -179,9 +178,11 @@ def main(edition, name, path, single, high, language, frmt, unleash, custom):
         cards = [card for card in cards if card.name == name]
 
     if single:
-        if frmt in ['standard'] or name in BASIC:
+        if frmt in ['standard']:
             cards = cards[-1:]
         else:
+            if name in BASIC:
+                cards = Card.where(set='pgru').where(name=name).all()
             cards = cards[:1]
 
     if path == "cardchunk":

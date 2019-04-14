@@ -1,0 +1,36 @@
+1 Drowned Catacomb
+3 Flooded Strand
+1 Gemstone Caverns
+1 Inkmoth Nexus
+9 Island
+1 Mikokoro, Center of the Sea
+1 River of Tears
+3 Scalding Tarn
+2 Sunken Hollow
+1 Watery Grave
+2 Snapcaster Mage
+1 Boomerang
+2 Cryptic Command
+4 Dictate of Kruphix
+2 Exhaustion
+2 Fatal Push
+2 Gigadrowse
+1 Howling Mine
+3 Jace, the Mind Sculptor
+4 Part the Waterveil
+2 Remand
+1 Search for Azcanta
+4 Serum Visions
+3 Temporal Mastery
+4 Time Warp
+
+Sideboard
+2 Ceremonious Rejection
+3 Collective Brutality
+1 Commandeer
+1 Dispel
+1 Engineered Explosives
+1 Fatal Push
+2 Hurkyl's Recall
+1 Sphinx's Tutelage
+3 Thing in the Ice
